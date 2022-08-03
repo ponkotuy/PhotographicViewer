@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,9 +34,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  File? _file;
   List<File> _thumbnails = [];
   int _currentIdx = 0;
+  int _selectedIdx = 0;
 
   void _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -42,21 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
       if (result != null) {
         String? path = result.files.single.path;
         if(path != null) {
-          _file = File(path);
-          _thumbnails = _file!.parent.listSync().whereType<File>().toList();
-          _currentIdx = _thumbnails.indexOf(_file!);
+          _thumbnails = File(path).parent.listSync().whereType<File>().toList();
+          _currentIdx = _thumbnails.map((e) => e.path).toList().indexOf(path);
         }
       }
     });
   }
 
   Widget image() {
-    if(_file == null) {
+    if(_thumbnails.isEmpty) {
       return Text(
         'None', style: Theme.of(context).textTheme.headline4,
       );
     }
-    File file = _file!;
+    final file = _thumbnails.elementAt(_currentIdx);
     return Expanded(
         child: Image(
           image: FileImage(file),
@@ -64,19 +65,61 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget thumbElem(int idx, bool selected) {
+    Image image = Image.file(_thumbnails.elementAt(idx), width: 200.0,);
+    if(selected) {
+      return Container(
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).selectedRowColor, width: 5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: image,
+      );
+    }
+    return GestureDetector(
+      onTap: () => setState(() { _currentIdx = idx; }),
+      child: image,
+    );
+  }
+
   Widget thumbnails() {
+    final start = max(0, _currentIdx - 2);
+    final end = min(start + 5, _thumbnails.length);
     return SizedBox(
       width: 240.0,
       child: ListView(
-        children: _thumbnails.map((e) =>
-            Image.file(e, width: 200.0,)
-        ).toList(),
+        children: [for(var i=start; i<end; i+=1) i].map((i) => thumbElem(i, (i - start) == _selectedIdx)).toList(),
       ),
     );
   }
 
+  static const prevKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowLeft];
+  static const nextKeys = [LogicalKeyboardKey.arrowRight, LogicalKeyboardKey.arrowUp];
+
+  KeyEventResult shortcutKey(FocusNode node, KeyEvent event) {
+    if(event is KeyDownEvent) {
+      if(prevKeys.contains(event.logicalKey)) {
+        setState(() {
+          _currentIdx = max(0, _currentIdx - 1);
+          _selectedIdx = min(_currentIdx, 2);
+        });
+        return KeyEventResult.handled;
+      }
+      if(nextKeys.contains(event.logicalKey)) {
+        setState(() {
+          _currentIdx = min(_currentIdx + 1, _thumbnails.length);
+          _selectedIdx = min(_currentIdx, 2);
+        });
+        return KeyEventResult.handled;
+      }
+    }
+    return KeyEventResult.ignored;
+  }
+
   @override
   Widget build(BuildContext context) {
+    _selectedIdx = min(_currentIdx, 2);
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -92,13 +135,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            image(),
-            thumbnails(),
-          ],
+      body: Focus(
+        autofocus: true,
+        onKeyEvent: shortcutKey,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              image(),
+              thumbnails(),
+            ],
+          ),
         ),
       ),
     );
