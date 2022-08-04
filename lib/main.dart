@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photographic_viewer/image.dart';
+import 'package:photographic_viewer/my_app_bar.dart';
 import 'package:photographic_viewer/thumbnails.dart';
 
 void main() {
@@ -20,53 +21,31 @@ class MyApp extends StatelessWidget {
       title: 'Photographic Viewer',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const MyHomePage(title: 'Photos'),
+      home: const Main(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class Main extends StatefulWidget {
+  const Main({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Main> createState() => _MainState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainState extends State<Main> {
   List<File> _thumbnails = [];
-  int _currentIdx = 0;
-
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    setState(() {
-      if (result != null) {
-        String? path = result.files.single.path;
-        if(path != null) {
-          _thumbnails = File(path).parent.listSync().whereType<File>().toList();
-          _currentIdx = _thumbnails.map((e) => e.path).toList().indexOf(path);
-        }
-      }
-    });
-  }
-
-  Widget image() {
-    if(_thumbnails.isEmpty) {
-      return Text(
-        'None', style: Theme.of(context).textTheme.headline4,
-      );
-    }
-    final file = _thumbnails.elementAt(_currentIdx);
-    return Expanded(
-        child: Image(
-          image: FileImage(file),
-        )
-    );
-  }
+  int _currentIdx = -1;
 
   static const prevKeys = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.arrowLeft];
   static const nextKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowRight];
+
+  void _pickFile(File file) {
+    setState(() {
+      _thumbnails = file.parent.listSync().whereType<File>().toList();
+      _currentIdx = _thumbnails.map((e) => e.path).toList().indexOf(file.path);
+    });
+  }
 
   KeyEventResult shortcutKey(FocusNode node, KeyEvent event) {
     if(event is KeyDownEvent) {
@@ -89,20 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: const Icon(IconData(0xf04ff, fontFamily: 'MaterialIcons')),
-              title: const Text('Open file'),
-              onTap: _pickFile,
-            )
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: MyAppBar(pickFile: _pickFile,),
       body: Focus(
         autofocus: true,
         onKeyEvent: shortcutKey,
@@ -110,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              image(),
+              ImageWidget(file: _currentIdx < 0 ? null : _thumbnails[_currentIdx]),
               Thumbnails(
                 thumbnails: _thumbnails,
                 onTap: (idx) => _currentIdx = idx,
