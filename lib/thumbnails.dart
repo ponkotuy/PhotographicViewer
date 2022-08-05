@@ -16,17 +16,21 @@ class Thumbnails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(thumbnails.isEmpty) return Container();
     final start = max(0, index - 2);
     return SizedBox(
       width: 240.0,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return ThumbnailElement(
-            file: thumbnails[index],
-            selected: (index - start) == selectedIdx(),
-            onTap: () => onTap(index),
-          );
-        },
+      child: Scrollbar(
+        child: ListView.builder(
+          itemCount: thumbnails.length,
+          itemBuilder: (context, index) {
+            return ThumbnailElement(
+              file: thumbnails[index],
+              selected: (index - start) == selectedIdx(),
+              onTap: () => onTap(index),
+            );
+          },
+        ),
       ),
     );
   }

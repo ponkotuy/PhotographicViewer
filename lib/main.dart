@@ -3,9 +3,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photographic_viewer/exif_parser.dart';
 import 'package:photographic_viewer/image.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
 import 'package:photographic_viewer/thumbnails.dart';
+import 'package:path/path.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,10 +42,16 @@ class _MainState extends State<Main> {
   static const prevKeys = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.arrowLeft];
   static const nextKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowRight];
 
-  void _pickFile(File file) {
+  void _pickFile(File file) async {
+    final thumbnails = file.parent.listSync()
+        .whereType<File>()
+        .where((e) => extension(e.path).isNotEmpty && imageExtensions.contains(extension(e.path).substring(1)))
+        .toList();
+    final exifs = { for (var e in thumbnails) e.path : (await ExifParser.parseCreateDate(e)) };
+    thumbnails.sort((a, b) => (exifs[a.path] ?? "a").compareTo(exifs[b.path] ?? "a"));
     setState(() {
-      _thumbnails = file.parent.listSync().whereType<File>().toList();
-      _currentIdx = _thumbnails.map((e) => e.path).toList().indexOf(file.path);
+      _thumbnails = thumbnails;
+      _currentIdx = thumbnails.map((e) => e.path).toList().indexOf(file.path);
     });
   }
 
