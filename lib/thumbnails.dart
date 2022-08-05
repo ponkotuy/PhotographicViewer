@@ -17,17 +17,16 @@ class Thumbnails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final start = max(0, index - 2);
-    final end = min(start + 5, thumbnails.length);
     return SizedBox(
       width: 240.0,
-      child: ListView(
-        children: [for(var i=start; i<end; i+=1) i].map((i) =>
-            ThumbnailElement(
-              file: thumbnails[i],
-              selected: (i - start) == selectedIdx(),
-              onTap: () => onTap(i),
-            )
-        ).toList(),
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return ThumbnailElement(
+            file: thumbnails[index],
+            selected: (index - start) == selectedIdx(),
+            onTap: () => onTap(index),
+          );
+        },
       ),
     );
   }

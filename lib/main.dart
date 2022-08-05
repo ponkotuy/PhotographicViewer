@@ -50,15 +50,11 @@ class _MainState extends State<Main> {
   KeyEventResult shortcutKey(FocusNode node, KeyEvent event) {
     if(event is KeyDownEvent) {
       if(prevKeys.contains(event.logicalKey)) {
-        setState(() {
-          _currentIdx = max(0, _currentIdx - 1);
-        });
+        setState(() { _currentIdx = max(0, _currentIdx - 1); });
         return KeyEventResult.handled;
       }
       if(nextKeys.contains(event.logicalKey)) {
-        setState(() {
-          _currentIdx = min(_currentIdx + 1, _thumbnails.length);
-        });
+        setState(() { _currentIdx = min(_currentIdx + 1, _thumbnails.length); });
         return KeyEventResult.handled;
       }
     }
@@ -79,7 +75,7 @@ class _MainState extends State<Main> {
               ImageWidget(file: _currentIdx < 0 ? null : _thumbnails[_currentIdx]),
               Thumbnails(
                 thumbnails: _thumbnails,
-                onTap: (idx) => _currentIdx = idx,
+                onTap: (idx) => setState(() { _currentIdx = idx; }),
                 index: _currentIdx
               ),
             ],
