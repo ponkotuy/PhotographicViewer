@@ -8,13 +8,18 @@ import 'package:photographic_viewer/image.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
 import 'package:photographic_viewer/thumbnails.dart';
 import 'package:path/path.dart';
+import 'package:collection/collection.dart';
 
-void main() {
-  runApp(const MyApp());
+void main(List<String> arguments) {
+  final String? firstArg = arguments.firstOrNull;
+  final initFile = firstArg == null ? null : File(firstArg);
+  runApp(MyApp(initFile: initFile,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, this.initFile}) : super(key: key);
+
+  final File? initFile;
 
   // This widget is the root of your application.
   @override
@@ -23,13 +28,15 @@ class MyApp extends StatelessWidget {
       title: 'Photographic Viewer',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Main(),
+      home: Main(initFile: initFile),
     );
   }
 }
 
 class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
+  const Main({Key? key, this.initFile}) : super(key: key);
+
+  final File? initFile;
 
   @override
   State<Main> createState() => _MainState();
@@ -71,8 +78,10 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.initFile != null && _currentIdx == -1) _pickFile(widget.initFile!);
+    final file = _currentIdx < 0 ? null : _thumbnails[_currentIdx];
     return Scaffold(
-      appBar: MyAppBar(pickFile: _pickFile,),
+      appBar: MyAppBar(pickFile: _pickFile, target: file,),
       body: Focus(
         autofocus: true,
         onKeyEvent: shortcutKey,
@@ -80,7 +89,7 @@ class _MainState extends State<Main> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ImageWidget(file: _currentIdx < 0 ? null : _thumbnails[_currentIdx]),
+              ImageWidget(file: file),
               Thumbnails(
                 thumbnails: _thumbnails,
                 onTap: (idx) => setState(() { _currentIdx = idx; }),
