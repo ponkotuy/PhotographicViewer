@@ -12,7 +12,7 @@ dependencies:
   file_picker: ^5.0.1
   exif: ^3.1.2
   share_plus: ^4.0.10
-  path: ^1.8.2
+  path: ^1.8.1
   collection: ^1.16.0
 
 dev_dependencies:
