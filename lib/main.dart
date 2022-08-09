@@ -45,6 +45,7 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   List<File> _thumbnails = [];
   int _currentIdx = -1;
+  Thumbnails? _thumbWidget;
 
   static const prevKeys = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.arrowLeft];
   static const nextKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowRight];
@@ -62,14 +63,22 @@ class _MainState extends State<Main> {
     });
   }
 
+  void changeImage(int index) {
+    if(index == _currentIdx) return;
+    setState(() {
+      _currentIdx = index;
+    });
+    _thumbWidget?.scrollSelected(index);
+  }
+
   KeyEventResult shortcutKey(FocusNode node, KeyEvent event) {
     if(event is KeyDownEvent) {
       if(prevKeys.contains(event.logicalKey)) {
-        setState(() { _currentIdx = max(0, _currentIdx - 1); });
+        changeImage(max(0, _currentIdx - 1));
         return KeyEventResult.handled;
       }
       if(nextKeys.contains(event.logicalKey)) {
-        setState(() { _currentIdx = min(_currentIdx + 1, _thumbnails.length); });
+        changeImage(min(_currentIdx + 1, _thumbnails.length - 1));
         return KeyEventResult.handled;
       }
     }
@@ -80,6 +89,11 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     if(widget.initFile != null && _currentIdx == -1) _pickFile(widget.initFile!);
     final file = _currentIdx < 0 ? null : _thumbnails[_currentIdx];
+    _thumbWidget = Thumbnails(
+      thumbnails: _thumbnails,
+      onTap: changeImage,
+      index: _currentIdx,
+    );
     return Scaffold(
       appBar: MyAppBar(pickFile: _pickFile, target: file,),
       body: Focus(
@@ -90,11 +104,7 @@ class _MainState extends State<Main> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ImageWidget(file: file),
-              Thumbnails(
-                thumbnails: _thumbnails,
-                onTap: (idx) => setState(() { _currentIdx = idx; }),
-                index: _currentIdx
-              ),
+              _thumbWidget!,
             ],
           ),
         ),

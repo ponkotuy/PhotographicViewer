@@ -5,34 +5,40 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Thumbnails extends StatelessWidget {
-  const Thumbnails({Key? key, required this.thumbnails, required this.onTap, required this.index}) : super(key: key);
+  Thumbnails({Key? key, required this.thumbnails, required this.onTap, required this.index}) : super(key: key);
+
   final List<File> thumbnails;
   final void Function(int) onTap;
   final int index;
+  final GlobalKey selectedKey = GlobalKey();
+  final ScrollController scrollController = ScrollController();
 
-  int selectedIdx() {
-    return min(index , 2);
+  void scrollSelected(int index) {
+    final height = min(max(0, index - 1) * 175.0, scrollController.position.maxScrollExtent);
+    scrollController.jumpTo(height);
   }
 
   @override
   Widget build(BuildContext context) {
     if(thumbnails.isEmpty) return Container();
-    final start = max(0, index - 2);
-    return SizedBox(
-      width: 240.0,
+    final widget = SizedBox(
+      width: 260.0,
       child: Scrollbar(
         child: ListView.builder(
+          controller: scrollController,
           itemCount: thumbnails.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (context, i) {
             return ThumbnailElement(
-              file: thumbnails[index],
-              selected: (index - start) == selectedIdx(),
-              onTap: () => onTap(index),
+              key: i == index ? selectedKey : null,
+              file: thumbnails[i],
+              selected: i == index,
+              onTap: () => onTap(i),
             );
           },
         ),
       ),
     );
+    return widget;
   }
 }
 
@@ -44,7 +50,7 @@ class ThumbnailElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image image = Image.file(file, width: 200.0, cacheWidth: 200,);
+    Image image = Image.file(file, width: 240.0, cacheWidth: 240, cacheHeight: 160,);
     if(selected) {
       return Container(
         padding: const EdgeInsets.all(5.0),
