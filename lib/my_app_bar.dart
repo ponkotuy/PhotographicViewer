@@ -9,10 +9,11 @@ import 'package:path/path.dart';
 const imageExtensions = ["bmp", "gif", "jpg", "jpeg", "jpg", "png", "BMP", "GIF", "JPG", "JPEG", "JPG", "PNG"];
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({Key? key, required this.pickFile, this.target}) : super(key: key);
+  const MyAppBar({Key? key, required this.pickFile, this.target, required this.reload}) : super(key: key);
 
   final void Function(File) pickFile;
   final File? target;
+  final void Function() reload;
 
   void runPickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(allowedExtensions: imageExtensions);
@@ -33,11 +34,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     if(home != null) target!.copySync(join(home, 'Desktop', basename(target!.path)));
   }
 
+  void deleteFile() {
+    target!.delete();
+    reload();
+  }
+
   bool shareable() {
     return target != null && Platform.isMacOS;
   }
 
-  bool copyable() {
+  bool isOpenImage() {
     return target != null;
   }
 
@@ -56,9 +62,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           text: const Text('Share'),
         ),
         IconTextButton(
-          onPressed: copyable() ? copyDesktop : null,
+          onPressed: isOpenImage() ? copyDesktop : null,
           icon: const Icon(IconData(0xe190, fontFamily: 'MaterialIcons')),
           text: const Text('Copy desktop'),
+        ),
+        IconTextButton(
+          onPressed: isOpenImage() ? deleteFile : null,
+          icon: const Icon(IconData(0xe1b9, fontFamily: 'MaterialIcons')),
+          text: const Text('Delete')
         ),
       ]
     );

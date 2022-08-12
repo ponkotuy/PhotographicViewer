@@ -63,6 +63,12 @@ class _MainState extends State<Main> {
     });
   }
 
+  void _reload() {
+    setState(() {
+      _thumbnails.removeWhere((f) => !f.existsSync());
+    });
+  }
+
   void changeImage(int index) {
     if(index == _currentIdx) return;
     setState(() {
@@ -95,7 +101,7 @@ class _MainState extends State<Main> {
       index: _currentIdx,
     );
     return Scaffold(
-      appBar: MyAppBar(pickFile: _pickFile, target: file,),
+      appBar: MyAppBar(pickFile: _pickFile, target: file, reload: _reload),
       body: Focus(
         autofocus: true,
         onKeyEvent: shortcutKey,
