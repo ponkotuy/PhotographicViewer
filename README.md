@@ -1,16 +1,10 @@
-# photographic_viewer
+# Photographic Viewer
+[![build macos](https://github.com/ponkotuy/PhotographicViewer/actions/workflows/build_macos.yml/badge.svg)](https://github.com/ponkotuy/PhotographicViewer/actions/workflows/build_macos.yml)
 
-A new Flutter project.
+Because 'finder' on Mac can't sort by shooting date, I made Photographic Viewer what can sort by shooting date.
 
-## Getting Started
+## Target
+- MacOS(Desktop) x86/arm
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Use Component
+- Flutter
