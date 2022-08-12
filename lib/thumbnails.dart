@@ -14,7 +14,7 @@ class Thumbnails extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
 
   void scrollSelected(int index) {
-    final height = min(max(0, index - 1) * 175.0, scrollController.position.maxScrollExtent);
+    final height = min(max(0, index - 1) * 160.0, scrollController.position.maxScrollExtent);
     scrollController.jumpTo(height);
   }
 
@@ -50,7 +50,7 @@ class ThumbnailElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image image = Image.file(file, width: 240.0, cacheWidth: 240, cacheHeight: 160,);
+    Image image = Image.file(file, width: 240.0, height: 160.0, cacheWidth: 240, fit: BoxFit.contain,);
     if(selected) {
       return Container(
         padding: const EdgeInsets.all(5.0),
