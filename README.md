@@ -8,3 +8,6 @@ Because 'finder' on Mac can't sort by shooting date, I made Photographic Viewer 
 
 ## Use Component
 - Flutter
+
+## License
+Apache-2.0
