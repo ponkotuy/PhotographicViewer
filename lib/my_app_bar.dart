@@ -53,22 +53,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconTextButton(
           onPressed: runPickFile,
-          icon: const Icon(IconData(0xf04ff, fontFamily: 'MaterialIcons')),
+          icon: const Icon(Icons.file_open),
           text: const Text('Open'),
         ),
         IconTextButton(
           onPressed: shareable() ? runShare : null,
-          icon: const Icon(IconData(0xe593, fontFamily: "MaterialIcons")),
+          icon: const Icon(Icons.share),
           text: const Text('Share'),
         ),
         IconTextButton(
           onPressed: isOpenImage() ? copyDesktop : null,
-          icon: const Icon(IconData(0xe190, fontFamily: 'MaterialIcons')),
+          icon: const Icon(Icons.content_copy),
           text: const Text('Copy desktop'),
         ),
         IconTextButton(
           onPressed: isOpenImage() ? deleteFile : null,
-          icon: const Icon(IconData(0xe1b9, fontFamily: 'MaterialIcons')),
+          icon: const Icon(Icons.delete),
           text: const Text('Delete')
         ),
       ]
