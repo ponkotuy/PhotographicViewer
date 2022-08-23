@@ -13,8 +13,8 @@
           cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
       - run: flutter build macos
       - name: zip
-        run: zip -r photographic_viewer.mac.zip photographic_viewer.app
+        run: zip -r PhotographicViewer.mac.zip PhotographicViewer.app
         working-directory: ./build/macos/Build/Products/Release
       - uses: softprops/action-gh-release@v1
         with:
-          files: ./build/macos/Build/Products/Release/photographic_viewer.mac.zip
+          files: ./build/macos/Build/Products/Release/PhotographicViewer.mac.zip
