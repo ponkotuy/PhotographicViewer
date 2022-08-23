@@ -100,12 +100,12 @@ class _MainState extends State<Main> {
       onTap: changeImage,
       index: _currentIdx,
     );
-    return Scaffold(
-      appBar: MyAppBar(pickFile: _pickFile, target: file, reload: _reload),
-      body: Focus(
-        autofocus: true,
-        onKeyEvent: shortcutKey,
-        child: Center(
+    return Focus(
+      autofocus: true,
+      onKeyEvent: shortcutKey,
+      child: Scaffold(
+        appBar: MyAppBar(pickFile: _pickFile, target: file, reload: _reload),
+        body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
