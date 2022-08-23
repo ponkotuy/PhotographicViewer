@@ -8,7 +8,7 @@ Because 'finder' on Mac can't sort by shooting date, I made Photographic Viewer 
 
 ## Install from homebrew
 ```shell
-brew tap b-wind/photographicviewer
+brew tap ponkotuy/photographicviewer
 brew install photographicviewer
 ```
 
