@@ -1,8 +1,5 @@
 name: Check source code
-on:
-  pull_request:
-    branches:
-      master
+on: [push]
 
 jobs:
   test:
