@@ -1,4 +1,6 @@
 PODS:
+  - flutter_native_drag_n_drop (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - share_plus_macos (0.0.1):
     - FlutterMacOS
@@ -6,11 +8,14 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - flutter_native_drag_n_drop (from `Flutter/ephemeral/.symlinks/plugins/flutter_native_drag_n_drop/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - share_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/share_plus_macos/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 EXTERNAL SOURCES:
+  flutter_native_drag_n_drop:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_native_drag_n_drop/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   share_plus_macos:
@@ -19,10 +24,11 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
+  flutter_native_drag_n_drop: 34da8c588a822cd9d1d37d0ab57adec6d5823297
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   share_plus_macos: 853ee48e7dce06b633998ca0735d482dd671ade4
   url_launcher_macos: 597e05b8e514239626bcf4a850fcf9ef5c856ec3
 
-PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
+PODFILE CHECKSUM: c7161fcf45d4fd9025dc0f48a76d6e64e52f8176
 
 COCOAPODS: 1.11.3
