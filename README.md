@@ -6,6 +6,12 @@ Because 'finder' on Mac can't sort by shooting date, I made Photographic Viewer 
 ## Target
 - MacOS(Desktop) x86/arm
 
+## Install from homebrew
+```shell
+brew tap b-wind/photographicviewer
+brew install photographicviewer
+```
+
 ## Use Component
 - Flutter
 
