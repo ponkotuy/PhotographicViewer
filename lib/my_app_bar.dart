@@ -47,6 +47,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return target != null;
   }
 
+  Color primary(BuildContext context) {
+    return Theme.of(context).colorScheme.inversePrimary;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -55,21 +59,25 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: runPickFile,
           icon: const Icon(Icons.file_open),
           text: const Text('Open'),
+          color: primary(context),
         ),
         IconTextButton(
           onPressed: shareable() ? runShare : null,
           icon: const Icon(Icons.share),
           text: const Text('Share'),
+          color: primary(context),
         ),
         IconTextButton(
           onPressed: isOpenImage() ? copyDesktop : null,
           icon: const Icon(Icons.content_copy),
           text: const Text('Copy desktop'),
+          color: primary(context),
         ),
         IconTextButton(
           onPressed: isOpenImage() ? deleteFile : null,
           icon: const Icon(Icons.delete),
-          text: const Text('Delete')
+          text: const Text('Delete'),
+          color: primary(context),
         ),
       ]
     );
@@ -80,15 +88,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class IconTextButton extends StatelessWidget {
-  const IconTextButton({Key? key, required this.onPressed, required this.icon, required this.text}) : super(key: key);
+  const IconTextButton({Key? key, required this.onPressed, required this.icon, required this.text, required this.color}) : super(key: key);
 
   final VoidCallback? onPressed;
   final Icon icon;
   final Text text;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      style: TextButton.styleFrom(primary: color),
       onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
