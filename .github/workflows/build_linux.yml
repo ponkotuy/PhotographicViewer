@@ -1,5 +1,15 @@
 name: build linux
-on: [push, pull_request]
+
+on:
+  push:
+    paths-ignore:
+      - 'windows/**'
+      - 'macos/**'
+  pull_request:
+    paths-ignore:
+      - 'windows/**'
+      - 'macos/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest

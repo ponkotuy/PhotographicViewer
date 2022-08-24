@@ -1,5 +1,15 @@
 name: build macos
-on: [push, pull_request]
+
+on:
+  push:
+    paths-ignore:
+      - 'linux/**'
+      - 'windows/**'
+  pull_request:
+    paths-ignore:
+      - 'linux/**'
+      - 'windows/**'
+
 jobs:
   build:
     runs-on: macos-latest
