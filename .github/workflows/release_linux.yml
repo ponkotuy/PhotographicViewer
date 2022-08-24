@@ -1,0 +1,27 @@
+name: 'Release linux archives'
+on:
+  release:
+    type: [published]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: PhotographicViewer
+      RELEASE_PATH: ./build/linux/x64/release
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.5'
+          channel: 'stable'
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+      - name: Build linux binary
+        run: flutter build linux
+      - name: Make tgz
+        run: tar -zcvf {{ env.APP_NAME }}.linux.tgz bundle/
+        working-directory: ${{ env.RELEASE_PATH }}
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ env.RELEASE_PATH }}/${{ env.APP_NAME }}.linux.tgz
