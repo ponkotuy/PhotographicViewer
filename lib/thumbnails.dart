@@ -23,20 +23,18 @@ class Thumbnails extends StatelessWidget {
     if(thumbnails.isEmpty) return Container();
     final widget = SizedBox(
       width: 260.0,
-      child: Scrollbar(
-        child: ListView.builder(
-          controller: scrollController,
-          itemCount: thumbnails.length,
-          itemBuilder: (context, i) {
-            return ThumbnailElement(
-              key: i == index ? selectedKey : null,
-              file: thumbnails[i],
-              selected: i == index,
-              onTap: () => onTap(i),
-            );
-          },
-        ),
-      ),
+      child: ListView.builder(
+        controller: scrollController,
+        itemCount: thumbnails.length,
+        itemBuilder: (context, i) {
+          return ThumbnailElement(
+            key: i == index ? selectedKey : null,
+            file: thumbnails[i],
+            selected: i == index,
+            onTap: () => onTap(i),
+          );
+        },
+      )
     );
     return widget;
   }
