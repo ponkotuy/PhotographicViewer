@@ -22,8 +22,11 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - name: Build linux binary
         run: flutter build linux
+      - name: Rename dir
+        run: mv bundle photographic_viewer
+        working-directory: ${{ env.RELEASE_PATH }}
       - name: Make tgz
-        run: tar -zcvf ${{ env.APP_NAME }}.linux.tgz bundle/
+        run: tar -zcvf ${{ env.APP_NAME }}.linux.tgz photographic_viewer/
         working-directory: ${{ env.RELEASE_PATH }}
       - uses: softprops/action-gh-release@v1
         with:
