@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photographic_viewer/draggable_image.dart';
 import 'package:photographic_viewer/exif_parser.dart';
 import 'package:photographic_viewer/image.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
@@ -109,7 +110,7 @@ class _MainState extends State<Main> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ImageWidget(file: file),
+              DraggableImageWidget(file: file),
               _thumbWidget!,
             ],
           ),
