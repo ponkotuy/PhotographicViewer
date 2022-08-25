@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photographic_viewer/draggable_image.dart';
 import 'package:photographic_viewer/exif_parser.dart';
-import 'package:photographic_viewer/image.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
 import 'package:photographic_viewer/thumbnails.dart';
 import 'package:path/path.dart';
