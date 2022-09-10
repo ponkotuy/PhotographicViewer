@@ -98,7 +98,7 @@ class IconTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: TextButton.styleFrom(primary: color),
+      style: TextButton.styleFrom(foregroundColor: color),
       onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
