@@ -1,5 +1,13 @@
 name: Check source code
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '.github/workflows'
+  pull_request:
+    paths-ignore:
+      - '.github/workflows'
+
 
 jobs:
   test:
