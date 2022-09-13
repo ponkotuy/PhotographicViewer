@@ -14,7 +14,7 @@ class Thumbnails extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
 
   void scrollSelected(int index) {
-    final height = min(max(0, index - 1) * 160.0, scrollController.position.maxScrollExtent);
+    final height = min(max(0, index - 1) * 162.5, scrollController.position.maxScrollExtent);
     scrollController.jumpTo(height);
   }
 
@@ -51,7 +51,7 @@ class ThumbnailElement extends StatelessWidget {
     Image image = Image.file(file, width: 240.0, height: 160.0, cacheWidth: 240, fit: BoxFit.contain,);
     if(selected) {
       return Container(
-        padding: const EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).selectedRowColor, width: 5),
           borderRadius: BorderRadius.circular(10),
@@ -61,7 +61,10 @@ class ThumbnailElement extends StatelessWidget {
     }
     return GestureDetector(
       onTap: onTap,
-      child: image,
+      child: Container(
+        margin: const EdgeInsets.all(2.0),
+        child: image
+      )
     );
   }
 }
