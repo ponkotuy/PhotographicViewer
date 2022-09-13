@@ -8,10 +8,11 @@ import 'package:flutter_native_drag_n_drop/flutter_native_drag_n_drop.dart';
 
 import 'image.dart';
 
-class DraggableImageWidget extends StatelessWidget {
-  const DraggableImageWidget({Key? key, required this.file}) : super(key: key);
+class DraggableWidget extends StatelessWidget {
+  const DraggableWidget({Key? key, required this.file, required this.children}) : super(key: key);
 
   final File? file;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +28,7 @@ class DraggableImageWidget extends StatelessWidget {
         fileStreamCallback: passFileContent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ImageWidget(file: file),
-          ],
+          children: children,
         ),
       )
     );
@@ -46,4 +45,3 @@ class DraggableImageWidget extends StatelessWidget {
       }
   }
 }
-
