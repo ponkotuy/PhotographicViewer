@@ -34,6 +34,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     if(home != null) target!.copySync(join(home, 'Desktop', basename(target!.path)));
   }
 
+  void copyToClipboard() {}
+
   void deleteFile() {
     target!.delete();
     reload();
@@ -69,8 +71,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconTextButton(
           onPressed: isOpenImage() ? copyDesktop : null,
+          icon: const Icon(Icons.save),
+          text: const Text('Save to desktop'),
+          color: primary(context),
+        ),
+        IconTextButton(
+          onPressed: isOpenImage() ? copyToClipboard : null,
           icon: const Icon(Icons.content_copy),
-          text: const Text('Copy desktop'),
+          text: const Text('Copy to Clipboard'),
           color: primary(context),
         ),
         IconTextButton(
