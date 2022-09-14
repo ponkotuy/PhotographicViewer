@@ -15,6 +15,7 @@ dependencies:
   path: ^1.8.1
   collection: ^1.16.0
   flutter_native_drag_n_drop: ^1.2.4
+  pasteboard: ^0.2.0
 
 dev_dependencies:
   flutter_test:
