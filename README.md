@@ -6,7 +6,7 @@
 Because 'finder' on Mac can't sort by shooting date, I made Photographic Viewer what can sort by shooting date.
 
 ## Target
-- MacOS(Desktop) x86/arm
+- macOS(Desktop) x86_64/arm64
 
 ## Install from homebrew
 ```shell
