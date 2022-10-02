@@ -29,7 +29,6 @@ class DraggableWidget extends StatelessWidget {
     String url,
     ProgressController progress
   ) async* {
-    print(fileName);
     final fileStream = file.openRead();
     final output = File(fileName);
     await for (final chunk in fileStream) {
