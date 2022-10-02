@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:pasteboard/pasteboard.dart';
 import 'package:path/path.dart';
 
 const imageExtensions = ["bmp", "gif", "jpg", "jpeg", "jpg", "png", "BMP", "GIF", "JPG", "JPEG", "JPG", "PNG"];
@@ -34,7 +35,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     if(home != null) target!.copySync(join(home, 'Desktop', basename(target!.path)));
   }
 
-  void copyToClipboard() {}
+  void copyToClipboard() {
+    Pasteboard.writeFiles([target!.path]);
+  }
 
   void deleteFile() {
     target!.delete();
