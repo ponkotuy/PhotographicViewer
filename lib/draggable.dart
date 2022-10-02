@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:flutter_native_drag_n_drop/flutter_native_drag_n_drop.dart';
 
-import 'image.dart';
-
 class DraggableWidget extends StatelessWidget {
   const DraggableWidget({Key? key, required this.file, required this.children}) : super(key: key);
 
