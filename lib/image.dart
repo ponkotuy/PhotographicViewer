@@ -15,14 +15,19 @@ class ImageWidget extends StatelessWidget {
       return Text('None', style: Theme.of(context).textTheme.headline4,);
     }
     final fname = basename(file!.path);
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(child: Image(image: FileImage(file!), fit: BoxFit.contain,)),
-          Text(fname, style: Theme.of(context).textTheme.caption),
-        ],
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(child: Image(image: FileImage(file!), fit: BoxFit.contain,)),
+              Text(fname, style: Theme.of(context).textTheme.caption),
+            ]
+          )
+        )
+      ]
     );
   }
 }

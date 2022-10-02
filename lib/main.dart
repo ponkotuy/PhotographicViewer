@@ -110,15 +110,16 @@ class _MainState extends State<Main> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              DraggableWidget(
-                file: file,
-                children: [ImageWidget(file: file)],
-              ),
+              file != null ? Expanded(child: DraggableWidget(file: file, child: ImageWidget(file: file))) : noneText(context),
               _thumbWidget!,
-            ],
-          ),
-        ),
-      ),
+            ]
+          )
+        )
+      )
     );
+  }
+
+  Widget noneText(BuildContext context) {
+    return Text("None", style: Theme.of(context).textTheme.headline4);
   }
 }
