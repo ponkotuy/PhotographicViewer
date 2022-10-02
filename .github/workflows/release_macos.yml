@@ -1,7 +1,7 @@
 name: 'Release macos archives'
 on:
   release:
-    type: [published]
+    types: [published]
 jobs:
   release:
     runs-on: macos-latest
