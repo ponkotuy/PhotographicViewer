@@ -2,6 +2,8 @@ PODS:
   - flutter_native_drag_n_drop (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
+  - pasteboard (0.0.1):
+    - FlutterMacOS
   - share_plus_macos (0.0.1):
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
@@ -10,6 +12,7 @@ PODS:
 DEPENDENCIES:
   - flutter_native_drag_n_drop (from `Flutter/ephemeral/.symlinks/plugins/flutter_native_drag_n_drop/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - pasteboard (from `Flutter/ephemeral/.symlinks/plugins/pasteboard/macos`)
   - share_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/share_plus_macos/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
@@ -18,6 +21,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_native_drag_n_drop/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  pasteboard:
+    :path: Flutter/ephemeral/.symlinks/plugins/pasteboard/macos
   share_plus_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/share_plus_macos/macos
   url_launcher_macos:
@@ -26,6 +31,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   flutter_native_drag_n_drop: 34da8c588a822cd9d1d37d0ab57adec6d5823297
   FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
+  pasteboard: 9b69dba6fedbb04866be632205d532fe2f6b1d99
   share_plus_macos: 853ee48e7dce06b633998ca0735d482dd671ade4
   url_launcher_macos: 597e05b8e514239626bcf4a850fcf9ef5c856ec3
 
