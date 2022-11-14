@@ -25,6 +25,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
   }
 
+  void runReload() async {
+    reload();
+  }
+
   void runShare() async {
     await Share.shareFiles([target!.path]);
   }
@@ -60,6 +64,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.file_open),
           text: const Text('Open'),
           color: primary(context),
+        ),
+        IconTextButton(
+          onPressed: isOpenImage() ? runReload : null,
+          icon: const Icon(Icons.refresh),
+          text: const Text('Reload dir'),
+          color: primary(context)
         ),
         IconTextButton(
           onPressed: shareable() ? runShare : null,
