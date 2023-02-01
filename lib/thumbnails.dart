@@ -27,6 +27,7 @@ class Thumbnails extends StatelessWidget {
       child: ListView.builder(
         controller: scrollController,
         itemCount: thumbnails.length,
+//        prototypeItem: ThumbnailElement(file: thumbnails[0], selected: true, onTap: () => onTap(0),),
         itemBuilder: (context, i) {
           return ThumbnailElement(
             key: i == index ? selectedKey : null,
