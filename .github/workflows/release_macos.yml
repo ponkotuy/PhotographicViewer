@@ -1,7 +1,8 @@
 name: 'Release macos archives'
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*.*.*"
 jobs:
   release:
     runs-on: macos-latest
