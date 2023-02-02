@@ -120,6 +120,6 @@ class _MainState extends State<Main> {
   }
 
   Widget noneText(BuildContext context) {
-    return Text("None", style: Theme.of(context).textTheme.headline4);
+    return Text("None", style: Theme.of(context).textTheme.headlineMedium);
   }
 }

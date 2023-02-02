@@ -27,7 +27,6 @@ class Thumbnails extends StatelessWidget {
       child: ListView.builder(
         controller: scrollController,
         itemCount: thumbnails.length,
-//        prototypeItem: ThumbnailElement(file: thumbnails[0], selected: true, onTap: () => onTap(0),),
         itemBuilder: (context, i) {
           return ThumbnailElement(
             key: i == index ? selectedKey : null,
@@ -55,7 +54,7 @@ class ThumbnailElement extends StatelessWidget {
       return DraggableWidget(file: file, child: Container(
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).selectedRowColor, width: 5),
+          border: Border.all(color: Theme.of(context).primaryColorLight, width: 5),
           borderRadius: BorderRadius.circular(10),
         ),
         child: image,

@@ -12,7 +12,7 @@ class ImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(file == null) {
-      return Text('None', style: Theme.of(context).textTheme.headline4,);
+      return Text('None', style: Theme.of(context).textTheme.headlineMedium);
     }
     final fname = basename(file!.path);
     return Row(
@@ -23,7 +23,7 @@ class ImageWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(child: Image(image: FileImage(file!), fit: BoxFit.contain,)),
-              Text(fname, style: Theme.of(context).textTheme.caption),
+              Text(fname, style: Theme.of(context).textTheme.bodySmall),
             ]
           )
         )

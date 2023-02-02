@@ -30,7 +30,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   void runShare() async {
-    await Share.shareFiles([target!.path]);
+    await Share.shareXFiles([XFile(target!.path)]);
   }
 
   void copyDesktop() {
