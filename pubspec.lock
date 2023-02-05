@@ -107,6 +107,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  irondash_engine_context:
+    dependency: transitive
+    description:
+      name: irondash_engine_context
+      sha256: "18c1636c1fe53032862cdbfabb28b1a1bffaed4cf143118308618f63784b757b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
+  irondash_message_channel:
+    dependency: transitive
+    description:
+      name: irondash_message_channel
+      sha256: a35566b1e7c8747b7ff6c64e43f8d8fe68b6f9a9d79158d6e4147b46ab4e43b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   js:
     dependency: transitive
     description:
@@ -264,6 +280,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  super_clipboard:
+    dependency: transitive
+    description:
+      name: super_clipboard
+      sha256: "35b4ce4aca8831abc0ca1dd45cad3f3b6ff649abc461a66485b9fe1d4ae183fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  super_drag_and_drop:
+    dependency: "direct main"
+    description:
+      name: super_drag_and_drop
+      sha256: e0134ce4eb04f759c892a4dc107663c4a9006da3db58a8e7dd6b7ba3a92ba346
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  super_native_extensions:
+    dependency: transitive
+    description:
+      name: super_native_extensions
+      sha256: "3bc9cf697c27a3b1f0c2247154430d9ddebb5a2712c4b872b16b0aba4dd27a5d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   typed_data:
     dependency: transitive
     description:
