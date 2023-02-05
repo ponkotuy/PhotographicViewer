@@ -47,4 +47,3 @@ jobs:
         files: |
           ${{ env.MACOS_APP_RELEASE_PATH }}/${{ env.APP_NAME }}.mac.zip
           ${{ env.MACOS_APP_RELEASE_PATH }}/${{ env.APP_NAME }}.dmg
-

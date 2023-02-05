@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:photographic_viewer/draggable.dart';
 
 class Thumbnails extends StatelessWidget {
   Thumbnails({Key? key, required this.thumbnails, required this.onTap, required this.index}) : super(key: key);
@@ -51,21 +50,21 @@ class ThumbnailElement extends StatelessWidget {
   Widget build(BuildContext context) {
     Image image = Image.file(file, width: 240.0, height: 160.0, cacheWidth: 240, fit: BoxFit.contain,);
     if(selected) {
-      return DraggableWidget(file: file, child: Container(
+      return Container(
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).primaryColorLight, width: 5),
           borderRadius: BorderRadius.circular(10),
         ),
         child: image,
-      ));
+      );
     }
-    return DraggableWidget(file: file, child: GestureDetector(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(2.0),
         child: image
       )
-    ));
+    );
   }
 }
