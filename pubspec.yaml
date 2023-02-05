@@ -12,13 +12,10 @@ dependencies:
   file_picker: ^5.2.5
   exif: ^3.1.2
   share_plus: ^6.3.0
-  path: ^1.8.2
+  path: ^1.8.3
   collection: ^1.17.0
-  flutter_native_drag_n_drop: ^1.2.4
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^2.0.1
 
 flutter:

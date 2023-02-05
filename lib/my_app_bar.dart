@@ -35,7 +35,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   void copyDesktop() {
     final home = Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
-    if(home != null) target!.copySync(join(home, 'Desktop', basename(target!.path)));
+    if(home != null) target!.copy(join(home, 'Desktop', basename(target!.path)));
   }
 
   void deleteFile() {
