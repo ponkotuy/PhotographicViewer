@@ -1,13 +1,14 @@
 
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'image_file.dart';
+
 class Thumbnails extends StatelessWidget {
   Thumbnails({Key? key, required this.thumbnails, required this.onTap, required this.index}) : super(key: key);
 
-  final List<File> thumbnails;
+  final List<ImageFile> thumbnails;
   final void Function(int) onTap;
   final int index;
   final GlobalKey selectedKey = GlobalKey();
@@ -29,7 +30,7 @@ class Thumbnails extends StatelessWidget {
         itemBuilder: (context, i) {
           return ThumbnailElement(
             key: i == index ? selectedKey : null,
-            file: thumbnails[i],
+            imageFile: thumbnails[i],
             selected: i == index,
             onTap: () => onTap(i),
           );
@@ -41,14 +42,14 @@ class Thumbnails extends StatelessWidget {
 }
 
 class ThumbnailElement extends StatelessWidget {
-  const ThumbnailElement({Key? key, required this.file, required this.selected, required this.onTap}) : super(key: key);
-  final File file;
+  const ThumbnailElement({Key? key, required this.imageFile, required this.selected, required this.onTap}) : super(key: key);
+  final ImageFile imageFile;
   final bool selected;
   final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    Image image = Image.file(file, width: 240.0, height: 160.0, cacheWidth: 240, fit: BoxFit.contain,);
+    Image image = Image.file(imageFile.file, width: 240.0, height: 160.0, cacheWidth: 240, fit: BoxFit.contain,);
     if(selected) {
       return Container(
         margin: const EdgeInsets.all(5.0),

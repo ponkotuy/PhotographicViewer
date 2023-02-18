@@ -10,6 +10,7 @@ import 'package:path/path.dart';
 import 'package:collection/collection.dart';
 
 import 'image.dart';
+import 'image_file.dart';
 
 void main(List<String> arguments) {
   final String? firstArg = arguments.firstOrNull;
@@ -43,7 +44,8 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  List<File> _thumbnails = [];
+  late File dir;
+  List<ImageFile> _thumbnails = [];
   int _currentIdx = -1;
   Thumbnails? _thumbWidget;
 
@@ -51,22 +53,21 @@ class _MainState extends State<Main> {
   static const nextKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowRight];
 
   void _pickFile(File file) async {
-    final thumbnails = file.parent.listSync()
+    final files = file.parent.listSync()
         .whereType<File>()
         .where((e) => extension(e.path).isNotEmpty && imageExtensions.contains(extension(e.path).substring(1)))
         .toList();
-    final exifs = { for (var e in thumbnails) e.path : (await ExifParser.parseCreateDate(e)) };
-    thumbnails.sort((a, b) => (exifs[a.path] ?? "a").compareTo(exifs[b.path] ?? "a"));
+    final imageFiles = [for (final f in files) ImageFile(f, (await ExifParser.parse(f)))];
+    imageFiles.sort();
     setState(() {
-      _thumbnails = thumbnails;
-      _currentIdx = thumbnails.map((e) => e.path).toList().indexOf(file.path);
+      dir = file;
+      _thumbnails = imageFiles;
+      _currentIdx = files.map((e) => e.path).toList().indexOf(file.path);
     });
   }
 
   void _reload() {
-    setState(() {
-      _thumbnails.removeWhere((f) => !f.existsSync());
-    });
+    _pickFile(dir);
   }
 
   void changeImage(int index) {
@@ -104,7 +105,7 @@ class _MainState extends State<Main> {
       autofocus: true,
       onKeyEvent: shortcutKey,
       child: Scaffold(
-        appBar: MyAppBar(pickFile: _pickFile, target: file, reload: _reload),
+        appBar: MyAppBar(pickFile: _pickFile, target: file?.file, reload: _reload),
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

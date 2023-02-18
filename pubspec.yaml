@@ -14,6 +14,7 @@ dependencies:
   share_plus: ^6.3.0
   path: ^1.8.3
   collection: ^1.17.0
+  fraction: ^4.1.4
 
 dev_dependencies:
   flutter_lints: ^2.0.1
