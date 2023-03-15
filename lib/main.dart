@@ -1,16 +1,13 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:photographic_viewer/exif_parser.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
-import 'package:photographic_viewer/thumbnails.dart';
-import 'package:path/path.dart';
+import 'package:photographic_viewer/util/viewer_key_event.dart';
+import '../thumbnails.dart';
 import 'package:collection/collection.dart';
 
 import 'image.dart';
-import 'image_file.dart';
+import 'util/image_file.dart';
 
 void main(List<String> arguments) {
   final String? firstArg = arguments.firstOrNull;
@@ -44,66 +41,34 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  late File dir;
-  List<ImageFile> _thumbnails = [];
-  int _currentIdx = -1;
-  Thumbnails? _thumbWidget;
-
-  static const prevKeys = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.arrowLeft];
-  static const nextKeys = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.arrowRight];
+  File? dir;
+  ImageFile? file;
+  final GlobalKey<ThumbnailsState> _thumbnailKey = GlobalKey();
 
   void _pickFile(File file) async {
-    final files = file.parent.listSync()
-        .whereType<File>()
-        .where((e) => extension(e.path).isNotEmpty && imageExtensions.contains(extension(e.path).substring(1)))
-        .toList();
-    final imageFiles = [for (final f in files) ImageFile(f, (await ExifParser.parse(f)))];
-    imageFiles.sort();
     setState(() {
       dir = file;
-      _thumbnails = imageFiles;
-      _currentIdx = files.map((e) => e.path).toList().indexOf(file.path);
     });
   }
 
   void _reload() {
-    _pickFile(dir);
+    if(dir != null) _pickFile(dir!);
   }
 
-  void changeImage(int index) {
-    if(index == _currentIdx) return;
+  void changeFile(ImageFile image) {
     setState(() {
-      _currentIdx = index;
+      file = image;
     });
-    _thumbWidget?.scrollSelected(index);
-  }
-
-  KeyEventResult shortcutKey(FocusNode node, KeyEvent event) {
-    if(event is KeyDownEvent) {
-      if(prevKeys.contains(event.logicalKey)) {
-        changeImage(max(0, _currentIdx - 1));
-        return KeyEventResult.handled;
-      }
-      if(nextKeys.contains(event.logicalKey)) {
-        changeImage(min(_currentIdx + 1, _thumbnails.length - 1));
-        return KeyEventResult.handled;
-      }
-    }
-    return KeyEventResult.ignored;
   }
 
   @override
   Widget build(BuildContext context) {
-    if(widget.initFile != null && _currentIdx == -1) _pickFile(widget.initFile!);
-    final file = _currentIdx < 0 ? null : _thumbnails[_currentIdx];
-    _thumbWidget = Thumbnails(
-      thumbnails: _thumbnails,
-      onTap: changeImage,
-      index: _currentIdx,
-    );
+    if(widget.initFile != null) _pickFile(widget.initFile!);
+    final thumbnails = Thumbnails(changeFile: changeFile, dir: dir, key: _thumbnailKey);
+    final keyEvent = _thumbnailKey.currentState == null ? null : ViewerKeyEvent(_thumbnailKey.currentState!);
     return Focus(
       autofocus: true,
-      onKeyEvent: shortcutKey,
+      onKeyEvent: keyEvent?.getListener,
       child: Scaffold(
         appBar: MyAppBar(pickFile: _pickFile, target: file?.file, reload: _reload),
         body: Center(
@@ -111,7 +76,7 @@ class _MainState extends State<Main> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               file != null ? Expanded(child: ImageWidget(file: file)) : noneText(context),
-              _thumbWidget!,
+              thumbnails,
             ]
           )
         )

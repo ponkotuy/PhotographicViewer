@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-import 'image_file.dart';
+import 'util/image_file.dart';
 
 class ImageWidget extends StatelessWidget {
   const ImageWidget({Key? key, required this.file}) : super(key: key);

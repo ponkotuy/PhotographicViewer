@@ -3,10 +3,9 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:photographic_viewer/util/constant.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart';
-
-const imageExtensions = ["bmp", "gif", "jpg", "jpeg", "jpg", "png", "BMP", "GIF", "JPG", "JPEG", "JPG", "PNG"];
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key, required this.pickFile, this.target, required this.reload}) : super(key: key);

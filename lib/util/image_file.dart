@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'exif.dart';
+import '../exif.dart';
 
 class ImageFile implements Comparable<ImageFile> {
   ImageFile(this.file, this.exif);
