@@ -49,6 +49,7 @@ class _MainState extends State<Main> {
     setState(() {
       dir = file;
     });
+    _thumbnailKey.currentState?.pickFile(file);
   }
 
   void _reload() {
@@ -65,7 +66,12 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     if(widget.initFile != null) _pickFile(widget.initFile!);
     final thumbnails = Thumbnails(changeFile: changeFile, dir: dir, key: _thumbnailKey);
-    final keyEvent = _thumbnailKey.currentState == null ? null : ViewerKeyEvent(_thumbnailKey.currentState!);
+    final keyEvent = _thumbnailKey.currentState == null ? null :
+      ViewerKeyEvent(
+        thumbnails: _thumbnailKey.currentState!,
+        target: file?.file,
+        reload: _reload
+      );
     return Focus(
       autofocus: true,
       onKeyEvent: keyEvent?.getListener,

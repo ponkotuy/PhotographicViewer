@@ -7,6 +7,8 @@ import 'package:photographic_viewer/util/constant.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart';
 
+import 'icon_text_button.dart';
+
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key, required this.pickFile, this.target, required this.reload}) : super(key: key);
 
@@ -86,6 +88,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: isOpenImage() ? deleteFile : null,
           icon: const Icon(Icons.delete),
           text: const Text('Delete'),
+          shortcutKey: 'del',
           color: primary(context),
         ),
       ]
@@ -94,29 +97,4 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class IconTextButton extends StatelessWidget {
-  const IconTextButton({Key? key, required this.onPressed, required this.icon, required this.text, required this.color}) : super(key: key);
-
-  final VoidCallback? onPressed;
-  final Icon icon;
-  final Text text;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(foregroundColor: color),
-      onPressed: onPressed,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          icon,
-          const SizedBox(width: 8),
-          Flexible(child: text),
-        ],
-      )
-    );
-  }
 }
