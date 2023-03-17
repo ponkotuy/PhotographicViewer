@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photographic_viewer/my_app_bar.dart';
 import 'package:photographic_viewer/util/viewer_key_event.dart';
-import '../thumbnails.dart';
+import 'package:photographic_viewer/util/controller.dart';
+import 'package:photographic_viewer/util/image_file.dart';
+import 'package:photographic_viewer/thumbnails.dart';
+import 'package:photographic_viewer/image.dart';
 import 'package:collection/collection.dart';
-
-import 'image.dart';
-import 'util/image_file.dart';
 
 void main(List<String> arguments) {
   final String? firstArg = arguments.firstOrNull;
@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
 
   final File? initFile;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,17 +65,16 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     if(widget.initFile != null) _pickFile(widget.initFile!);
     final thumbnails = Thumbnails(changeFile: changeFile, dir: dir, key: _thumbnailKey);
-    final keyEvent = _thumbnailKey.currentState == null ? null :
-      ViewerKeyEvent(
-        thumbnails: _thumbnailKey.currentState!,
-        target: file?.file,
-        reload: _reload
-      );
+    final controller = Controller(pickFile: _pickFile, target: file?.file, reload: _reload);
+    final keyEvent = ViewerKeyEvent(
+      thumbnails: _thumbnailKey.currentState,
+      controller: controller,
+    );
     return Focus(
       autofocus: true,
-      onKeyEvent: keyEvent?.getListener,
+      onKeyEvent: keyEvent.getListener,
       child: Scaffold(
-        appBar: MyAppBar(pickFile: _pickFile, target: file?.file, reload: _reload),
+        appBar: MyAppBar(controller: controller),
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
