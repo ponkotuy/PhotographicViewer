@@ -60,7 +60,7 @@ class ThumbnailsState extends State<Thumbnails> {
     xs.sort();
     setState(() {
       images = xs;
-      currentIdx = files.map((e) => e.path).toList().indexOf(dir.path);
+      currentIdx = xs.map((e) => e.file.path).toList().indexOf(dir.path);
     });
     widget.changeFile(images[currentIdx]);
   }
