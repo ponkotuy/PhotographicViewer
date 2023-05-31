@@ -57,7 +57,10 @@ class ViewerKeyEvent {
         controller.copyDesktop();
         return KeyEventResult.handled;
       }
-      if(event.logicalKey == LogicalKeyboardKey.delete && controller.isOpenImage()) {
+      if(
+        (event.logicalKey == LogicalKeyboardKey.delete || event.logicalKey == LogicalKeyboardKey.backspace) &&
+          controller.isOpenImage()
+      ) {
         controller.deleteFile();
         return KeyEventResult.handled;
       }

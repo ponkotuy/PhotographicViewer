@@ -49,7 +49,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: controller.isOpenImage() ? controller.deleteFile : null,
           icon: const Icon(Icons.delete),
           text: const Text('Delete'),
-          shortcutKey: 'del',
+          shortcutKey: 'del/BS',
           color: primary(context),
         ),
       ]
